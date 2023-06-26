@@ -3,9 +3,6 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-# Add Blog Models : Add Post Model, Add datetime fields,
-#   Add default sort order, Add DB Index at `published_at` field
-
 
 class Post(BaseModel):
 
