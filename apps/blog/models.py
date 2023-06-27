@@ -12,7 +12,7 @@ class PublishedManager(models.Model):
     def get_queryset(self):
         return super().get_queryset().filter(status=Post.Status.PUBLISHED)
 
-
+      
 class Post(BaseModel):
 
     class Status(models.TextChoices):
