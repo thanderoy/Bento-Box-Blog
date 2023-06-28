@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
-class PublishedManager(models.Model):
+class PublishedManager(models.Manager):
     """
     Custom Manager for working with PUBLISHED posts.
 
