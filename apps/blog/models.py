@@ -1,8 +1,9 @@
-from apps.common.models import BaseModel
-from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
+from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+
+from apps.common.models import BaseModel
 
 
 class PublishedManager(models.Manager):
