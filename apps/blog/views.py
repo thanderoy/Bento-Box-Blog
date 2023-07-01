@@ -1,10 +1,11 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.mail import send_mail
 from django.conf import settings
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
-from .forms import EmailPostForm
-from .models import Post
+from .forms import EmailPostForm, CommentForm
+from .models import Post, Comment
 
 SUBJECT = '[CLASSIC_BLOG] '
 
@@ -48,8 +49,14 @@ def post_detail(request, year, month, day, post):
         slug=post,
 
     )
+    comments = post.comments.filter(active=True)
+    form = CommentForm()
 
-    context = {'post': post}
+    context = {
+        'post': post,
+        'comments': comments,
+        'form': form
+    }
     return render(request, 'blog/post/detail.html', context)
 
 
@@ -87,3 +94,25 @@ def post_share(request, post_id):
         'sent': sent
     }
     return render(request, 'blog/post/share.html', context)
+
+
+@require_POST
+def post_comment(request, post_id):
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+        status=Post.Status.PUBLISHED
+    )
+    comment = None
+    form = CommentForm(data=request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.save()
+
+    context = {
+        'post': post,
+        'form': form,
+        'comment': comment
+    }
+    return render(request, 'blog/post/comment.html', context)

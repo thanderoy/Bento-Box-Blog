@@ -53,3 +53,16 @@ class Post(BaseModel):
                 self.published_at.day,
                 self.slug
             ])
+
+
+class Comment(BaseModel):
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='comments'
+    )
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    active = models.BooleanField(default=True)
+
+    def __str__(self) -> str:
+        return f'Comment by {self.name} on {self.post}'

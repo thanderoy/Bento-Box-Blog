@@ -21,4 +21,7 @@ class BaseModel(models.Model):
         """Define a default least recently used ordering."""
 
         abstract = True
-        ordering = ("-updated", "-created")
+        ordering = ("-updated_at", "-created_at")
+        indexes = [
+            models.Index(fields=['-created_at']),
+        ]
