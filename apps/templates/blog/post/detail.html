@@ -18,6 +18,14 @@
 </section>
 
 <section>
+    {% for post in similar_posts %}
+        <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+    {% empty %}
+        There are no similar posts yet
+    {% endfor %}
+</section>
+
+<section>
     {% with comments.count as total_comments %}
         <h2>{{ total_comments }} comment {{ total_comments|pluralize}}</h2>
     {% endwith %}
