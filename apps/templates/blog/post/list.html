@@ -8,11 +8,26 @@
 </section>
 
 <section>
+    {% if tag %}
+        <h2>Posts tagged with "{{ tag.name }}"</h2>
+    {% endif %}
+</section>
+
+<section>
 
     {% for post in posts %}
 
     <div>
         <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+        <div>
+            Tags:
+            {% for tag in post.tag.all %}
+                <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+                    {{ tag.name }}
+                </a>
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </div>
         <span>Published: {{ post.published_at }} by {{ post.author }}</span>
         <p>{{ post.body|truncatewords:30|linebreaks }}</p>
     </div>

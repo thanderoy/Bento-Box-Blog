@@ -6,6 +6,7 @@ from django.views.decorators.http import require_POST
 
 from .forms import EmailPostForm, CommentForm
 from .models import Post, Comment
+from taggit.models import Tag
 
 SUBJECT = '[CLASSIC_BLOG] '
 
@@ -20,8 +21,15 @@ SUBJECT = '[CLASSIC_BLOG] '
 #     template_name = 'blog/post/list.html'
 
 
-def post_list(request):
+def post_list(request, tag_slug=None):
     posts_raw = Post.published.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(
+            Tag,
+            slug=tag_slug
+        )
+        posts_raw = posts_raw.filter(tags__in=[tag])
 
     paginator = Paginator(posts_raw, 3)
     page_number = request.GET.get('page', 1)
@@ -35,7 +43,10 @@ def post_list(request):
         # If no next page, render last page.
         posts = paginator.page(paginator.num_pages)
 
-    context = {'posts': posts}
+    context = {
+        'posts': posts,
+        'tag': tag
+    }
     return render(request, 'blog/post/list.html', context)
 
 

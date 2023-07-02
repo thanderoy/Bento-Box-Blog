@@ -1,9 +1,12 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.utils import timezone
 
 from apps.common.models import BaseModel
+from taggit.managers import TaggableManager
+from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase
 
 
 class PublishedManager(models.Manager):
@@ -13,6 +16,12 @@ class PublishedManager(models.Manager):
     """
     def get_queryset(self):
         return super().get_queryset().filter(status=Post.Status.PUBLISHED)
+
+
+class UUIDTaggedItem(GenericUUIDTaggedItemBase, TaggedItemBase):
+    class Meta:
+        verbose_name = _('Tag')
+        verbose_name_plural = _('Tags')
 
 
 class Post(BaseModel):
@@ -33,6 +42,8 @@ class Post(BaseModel):
 
     objects = models.Manager()  # Default manager.
     published = PublishedManager()  # Custom manager for PUBLISHED posts only.
+
+    tags = TaggableManager(through=UUIDTaggedItem)
 
     class Meta:
         ordering = ['-published_at']
