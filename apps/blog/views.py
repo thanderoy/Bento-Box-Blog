@@ -62,7 +62,7 @@ def post_detail(request, year, month, day, post):
     similar_posts = Post.published.filter(
         tags__in=post_tag_ids).exclude(id=post.id)
     similar_posts = similar_posts.annotate(
-        same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
+        same_tags=Count('tags')).order_by('-same_tags', '-published_at')[:2]
 
     context = {
         'post': post,

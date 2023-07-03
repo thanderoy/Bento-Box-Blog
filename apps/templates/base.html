@@ -1,3 +1,4 @@
+{% load blog_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,8 +9,27 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+    <section>
+        <h2>Total Posts: [{% total_posts %}]</h2>
+    </section>
+
     {% block content %}
 
     {% endblock content %}
+
+    <section>
+        <h3>Latest Posts</h3>
+        {% show_latest_posts %}
+    </section>
+
+    <section>
+        <h3>Most Commented Posts</h3>
+        {% get_most_commented_posts as popular_posts %}
+        <ul>
+            {% for post in popular_posts %}
+                <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </section>
 </body>
 </html>
