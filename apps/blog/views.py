@@ -1,24 +1,15 @@
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.core.mail import send_mail
 from django.conf import settings
-from django.shortcuts import get_object_or_404, redirect, render
+from django.core.mail import send_mail
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models import Count
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
-
-from .forms import EmailPostForm, CommentForm
-from .models import Post, Comment
 from taggit.models import Tag
 
-SUBJECT = '[CLASSIC_BLOG] '
+from .forms import CommentForm, EmailPostForm
+from .models import Post
 
-# from django.views.generic import ListView
-
-
-# class PostListView(ListView):
-#
-#     queryset = Post.published.all()
-#     context_object_name = 'posts'
-#     paginate_by = 3
-#     template_name = 'blog/post/list.html'
+SUBJECT_PREFIX = '[CLASSIC_BLOG] '
 
 
 def post_list(request, tag_slug=None):
@@ -60,13 +51,24 @@ def post_detail(request, year, month, day, post):
         slug=post,
 
     )
+    # List of active comments
     comments = post.comments.filter(active=True)
+
+    # Add comment Form
     form = CommentForm()
+
+    # List of similar posts
+    post_tag_ids = post.tags.values_list('id', flat=True)
+    similar_posts = Post.published.filter(
+        tags__in=post_tag_ids).exclude(id=post.id)
+    similar_posts = similar_posts.annotate(
+        same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
 
     context = {
         'post': post,
         'comments': comments,
-        'form': form
+        'form': form,
+        'similar_posts': similar_posts,
     }
     return render(request, 'blog/post/detail.html', context)
 
@@ -90,8 +92,8 @@ def post_share(request, post_id):
             post_url = request.build_absolute_uri(
                 post.get_absolute_url()
             )
-            subject = SUBJECT + f"{data.get('name')} recommends you to read \
-                { post.title}"
+            subject = SUBJECT_PREFIX + f"{data.get('name')} recommends you to \
+                read { post.title}"
             message = f"Read { post.title } at { post_url }\n\n \
                 {data.get('name')}\'s comments: { data.get('comment')}"
             send_mail(
