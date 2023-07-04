@@ -29,6 +29,7 @@ DEBUG = config("DEBUG", default=False)
 
 ALLOWED_HOSTS = ["localhost"]
 
+SITE_ID = 1
 
 # Application definition
 
@@ -38,9 +39,13 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
     "django.contrib.staticfiles",
+
     # Local Apps
     "apps.blog.apps.BlogConfig",
+
     # 3rd Party
     "taggit",
     
