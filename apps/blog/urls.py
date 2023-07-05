@@ -1,18 +1,19 @@
 from django.urls import path
-from . import views, feeds
 
+from . import feeds, views
 
-app_name = 'apps.blog'
+app_name = "apps.blog"
 
 
 urlpatterns = [
-    path('', views.post_list, name='post_list'),
-    path('tag/<slug:tag_slug>/', views.post_list, name='post_list_by_tag'),
+    path("", views.post_list, name="post_list"),
+    path("tag/<slug:tag_slug>/", views.post_list, name="post_list_by_tag"),
     path(
-        '<int:year>/<int:month>/<int:day>/<slug:post>/',
-        views.post_detail, name='post_detail'
+        "<int:year>/<int:month>/<int:day>/<slug:post>/",
+        views.post_detail, name="post_detail",
     ),
-    path('<uuid:post_id>/share/', views.post_share, name='post_share'),
-    path('<uuid:post_id>/comment/', views.post_comment, name='post_comment'),
-    path('feed/', feeds.LatestPostsFeed(), name='post_feed')
+    path("<uuid:post_id>/share/", views.post_share, name="post_share"),
+    path("<uuid:post_id>/comment/", views.post_comment, name="post_comment"),
+    path("feed/", feeds.LatestPostsFeed(), name="post_feed"),
+    path("search/", views.post_search, name="post_search"),
 ]
