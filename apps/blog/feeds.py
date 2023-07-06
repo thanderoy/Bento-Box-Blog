@@ -9,9 +9,9 @@ from .models import Post
 
 
 class LatestPostsFeed(Feed):
-    title = "Classic Blog"
+    title = "Bento Box Blog"
     link = reverse_lazy("blog:post_list")
-    description = "New on Classic Blog"
+    description = "New on Bento Box Blog"
 
     def items(self) -> QuerySet:
         return Post.published.all()[:5]
