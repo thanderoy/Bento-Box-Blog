@@ -11,7 +11,7 @@ from taggit.models import Tag
 from .forms import CommentForm, EmailPostForm, SearchForm
 from .models import Post
 
-SUBJECT_PREFIX = '[CLASSIC_BLOG] '
+SUBJECT_PREFIX = '[BENTO BOX BLOG] '
 
 
 def post_list(request, tag_slug=None):
