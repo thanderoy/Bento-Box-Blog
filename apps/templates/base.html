@@ -6,31 +6,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Bento Box Blog{% endblock title %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'blog:post_list' %}">
+            🍱 Bento Box Blog [{% total_posts %}]
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#">Hello, User</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+            </ul>
+        </div> -->
+    </div>
+</nav>
+
 <body>
-    <section>
-        <h2>Total Posts: [{% total_posts %}]</h2>
-        <a href="{% url 'blog:post_feed' %}">Subscribe to my RSS feed.</a>
-    </section>
 
     {% block content %}
 
     {% endblock content %}
 
-    <section>
-        <h3>Latest Posts</h3>
-        {% show_latest_posts %}
-    </section>
-
-    <section>
-        <h3>Most Commented Posts</h3>
-        {% get_most_commented_posts as popular_posts %}
-        <ul>
-            {% for post in popular_posts %}
-                <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-            {% endfor %}
-        </ul>
-    </section>
 </body>
 </html>
