@@ -27,7 +27,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False)
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default=" ", cast=lambda var: [str.strip() for str in var.split(',')])   # noqa
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default=" ", cast=lambda var: var.split(','))   # noqa
 
 SITE_ID = 1
 # Application definition
