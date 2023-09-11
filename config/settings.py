@@ -27,10 +27,9 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False)
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default=" ", cast=lambda var: [str.strip() for str in var.split(',')])   # noqa
 
 SITE_ID = 1
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,12 +48,17 @@ INSTALLED_APPS = [
 
     # 3rd Party
     "taggit",
+    "corsheaders",
+    "whitenoise.runserver_nostatic",
+    "storages",
     
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -139,7 +143,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "apps/common/static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -152,3 +157,8 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+
+
+CORS_ALLOWED_ORIGINS = config("ALLOWED_ORIGINS", default=" ",  cast=lambda var: [str.strip() for str in var.split(',')])   # noqa
+
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
