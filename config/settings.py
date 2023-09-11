@@ -159,6 +159,6 @@ EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 
 
-CORS_ALLOWED_ORIGINS = config("ALLOWED_ORIGINS", default=" ",  cast=lambda var: [str.strip() for str in var.split(',')])   # noqa
+CORS_ALLOWED_ORIGINS = config("ALLOWED_ORIGINS", default=" ",  cast=lambda var: var.split(','))   # noqa
 
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
