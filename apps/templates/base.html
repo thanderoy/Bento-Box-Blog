@@ -7,31 +7,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Bento Box Blog{% endblock title %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Raleway:wght@300;500;600&family=Roboto+Serif:wght@300;400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </head>
 
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'blog:post_list' %}">
-            🍱 Bento Box Blog [{% total_posts %}]
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#">Hello, User</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
-            </ul>
-        </div> -->
-    </div>
-</nav>
+
 
 <body>
+    <div class="container-fluid vh-100">
+        <div class="row vh-100">
 
-    {% block content %}
+            <header class="border-bottom border-dark bg-light">
+                <div class="row container-fluid">
+                    <a class="p-2 text-decoration-none" href="{% url 'blog:post_list' %}">
+                        <div class="row my-4 mx-auto text-uppercase justify-content-center align-items-center">
+                            <div class="col-1 text-center px-0 fs-1">🍱</div>
+                            <div class="col-1 px-0 fs-6 text-dark">
+                                <p class="lh-1 p-0 m-0">Bento</p>
+                                <p class="lh-1 p-0 m-0">Box</p>
+                                <p class="lh-1 p-0 m-0">Blog</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </header>
+        
+            {% block content %}
+        
+            {% endblock content %}
+        
+            <footer class="border-top border-dark bg-light fixed-bottom">
+                Bento Box Blog 💗
+            </footer>
 
-    {% endblock content %}
-
+        </div>
+    </div>
 </body>
+
 </html>
