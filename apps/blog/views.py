@@ -24,7 +24,7 @@ def post_list(request, tag_slug=None):
         )
         posts_raw = posts_raw.filter(tags__in=[tag])
 
-    paginator = Paginator(posts_raw, 3)
+    paginator = Paginator(posts_raw, 5)
     page_number = request.GET.get('page', 1)
 
     try:
