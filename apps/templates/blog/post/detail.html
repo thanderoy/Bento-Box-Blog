@@ -5,42 +5,84 @@
 
 {% block content %}
 
-<section>
-    <h1>{{ post.title }}</h1>
-    <span>Published: {{ post.published_at }} by {{ post.author }}</span>
-</section>
+<div class="container-fluid vh-100">
+    <div class="row vh-100 p-0 justify-content-center">
 
-<section>
-    {{ post.body|markdown }}
-</section>
+        <div class="col-1 p-5 border-end border-dark"></div>
+        <div id="Main" class="col-8 border-end border-dark">
 
-<section>
-    <p><a href="{% url 'blog:post_share' post.id %}">Share this post.</a></p>
-</section>
+            <div id="Post" class="row my-3">
+                <div class="col">
+                    <div id="Post Title" class="row px-5 py-3">
+                        <div class="col"><h2 style="font-family: 'Roboto Serif', serif; color: black;">{{ post.title }}</h2></a></div>
+                    </div>
+                    <div id="Post Meta" class="row px-5 py-2 border-top border-bottom border-dark">
+                        <div class="col card-subtitle text-muted" style="font-family: 'Raleway', sans-serif; color: black;">
+                            <span class="m-1"><i class="fa-regular fa-circle-user"></i> {{ post.author }}</span>
+                            <span class="m-1"><i class="fa-regular fa-calendar"></i> {{ post.published_at }}</span>
+                        </div>
+                        <div class="col card-subtitle text-muted" style="font-family: 'Raleway', sans-serif; color: black;">
+                            <span class="m-1"><i class="fa-regular fa-comment"></i> {{ comments.count }}</span>
+                            <span class="m-1"><a href="{% url 'blog:post_share' post.id %}"><i class="fa-regular fa-calendar"></i></a></span>
+                        </div>
+                    </div>
+                    <div id="Post Body" class="row px-5 py-2" style="font-family: 'Lato', sans-serif; color: black;">
+                        <div class="col">
+                            <p>{{ post.body|markdown}}</p>
+                        </div>
+                    </div>
+                    <div id="Post Comments" class="row px-5 py-2 border-top border-dark">
+                        {% for comment in comments %}
+                            <div>
+                                <p>Comment {{ forloop.counter }} by {{ comment.name }} {{ comment.created_at }}</p>
+                                {{ comment.body|linebreaks }}
+                            </div>
+                        {% empty %}
+                            <p>There are no comments.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 
-<section>
-    {% for post in similar_posts %}
-        <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
-    {% empty %}
-        There are no similar posts yet
-    {% endfor %}
-</section>
-
-<section>
-    {% with comments.count as total_comments %}
-        <h2>{{ total_comments }} comment {{ total_comments|pluralize}}</h2>
-    {% endwith %}
-</section>
-
-<section>
-    {% for comment in comments %}
-        <div>
-            <p>Comment {{ forloop.counter }} by {{ comment.name }} {{ comment.created_at }}</p>
-            {{ comment.body|linebreaks }}
         </div>
-    {% empty %}
-        <p>There are no comments.</p>
-    {% endfor %}
+
+        <div id="Sidebar" class="col-3 p-3">
+
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <div id="Latest Posts" class="row border border-dark my-3 m-1 p-3">
+                                <h3 style="font-family: 'Raleway', sans-serif;">Latest Posts</h3>
+                                {% show_latest_posts %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div id="Similar Posts">
+                                {% for post in similar_posts %}
+                                    <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+                                {% empty %}
+                                    There are no similar posts yet
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<section>
+    
 </section>
 
 <section>
