@@ -112,11 +112,14 @@
                             <div id="Popular Posts" class="row border border-dark my-3 m-1 p-3">
                                 <h3 style="font-family: 'Raleway', sans-serif;">Popular Posts</h3>
                                 {% get_most_commented_posts as popular_posts %}
-                                <ul>
-                                    {% for post in popular_posts %}
-                                        <li style="font-family: 'Lato', sans-serif; list-style:none; color: black;"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-                                    {% endfor %}
-                                </ul>
+                                <div>
+                                    <ul>
+                                        {% for post in popular_posts %}
+                                            <li style="font-family: 'Lato', sans-serif; list-style:none;"><a href="{{ post.get_absolute_url }}"><p style="color: black;">{{ post.title }}</p></a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
                             </div>
                         </div>
                     </div>
