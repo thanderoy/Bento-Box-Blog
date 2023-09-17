@@ -36,7 +36,7 @@
 
                         {% for comment in comments %}
 
-                            <div class="row flex-column border border-dark p-3">
+                            <div class="row flex-column border border-dark p-3 m-1">
                                 <div class="col" style="font-family: 'Lato', sans-serif; color: black;">
                                     {{ comment.body|linebreaks }}
                                 </div>
@@ -49,6 +49,11 @@
                         {% empty %}
                             <p style="font-family: 'Lato', sans-serif; color: black;">There are no comments yet.</p>
                         {% endfor %}
+
+                        <div>
+                            {% include "blog/post/comment_form.html" %}
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -93,8 +98,6 @@
 
 
 
-<!-- <section>
-    {% include "blog/post/comment_form.html" %}
-</section> -->
+
 
 {% endblock content %}

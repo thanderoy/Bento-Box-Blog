@@ -4,7 +4,7 @@ from django.contrib.postgres.search import (
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
 from taggit.models import Tag
 
@@ -130,7 +130,11 @@ def post_comment(request, post_id):
         'form': form,
         'comment': comment
     }
-    return render(request, 'blog/post/comment.html', context)
+    # return render(request, 'blog/post/comment.html', context)
+    return redirect(
+        'apps.blog:post_detail', post.published_at.year, 
+        post.published_at.month, post.published_at.day, post.slug
+    )
 
 
 def post_search(request):
