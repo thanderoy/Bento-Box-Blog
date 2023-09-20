@@ -10,33 +10,27 @@
 
         <div id="Main" class="col-8 p-5 border-end border-dark">
 
-            <!-- <div class="row">
-                <div class="col">
-                    <div class="row">
-                        <div id="SearchBar" class="p-0 m-0">
-                            <form class="container px-1 m-2">
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fa-solid fa-magnifying-glass fa-shake"></i></span>
-                                    <input type="search" class="form-control" placeholder="Search" aria-label="Search">
-                                </div>
-                            </form>
+            <div class="row w-25">
+                <div id="SearchBar" class="p-0 m-0">
+                    <form class="container px-1 m-2" method="GET">
+                        <div class="input-group">
+                            <span class="input-group-text border border-dark border-end-0 rounded-0"><i class="fa-solid fa-magnifying-glass fa-shake"></i></span>
+                            <input type="search" class="form-control border border-dark rounded-0" placeholder="Search" name="{{ form.query.name }}" id="{{ form.query.id }}" value="{{ form.query.value }}">
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="col ">
-                    <div class="row p-0 m-0">
-                        <div class="row px-1 m-2 align-items-center justify-content-end">
-                            <div class="col-3 p-0"><span class="fs-6 badge bg-secondary">Tag 1</span></div>
-                            <div class="col-3 p-0"><span class="fs-6 badge bg-secondary">Tag 1</span></div>
-                            <div class="col-3 p-0"><span class="fs-6 badge bg-secondary">Tag 1</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+            </div>
 
             <div class="container-fluid p-0 mt-2" style="font-family: 'Raleway', sans-serif;">
                 {% if tag %}
                     <h2 class="m-0 p-0">Posts tagged with <p class="badge rounded-pill bg-light text-muted m-0">{{ tag.name }}</p></h2>
+                {% endif %}
+            </div>
+
+            <div class="container-fluid p-0 mt-2" style="font-family: 'Raleway', sans-serif;">
+                {% if query %}
+                    <h2 class="m-0 p-0">Posts containing <p class="badge rounded-pill bg-light text-muted m-0">'{{ query }}'</p></h2>
+              
                 {% endif %}
             </div>
 
@@ -70,7 +64,7 @@
                             </div>
                             <div id="Post Body" class="row" style="font-family: 'Lato', sans-serif; color: black;">
                                 <div class="col">
-                                    <p>{{ post.body|markdown|truncatewords_html:40 }}</p>
+                                    <p>{{ post.body|markdown|truncatewords_html:12 }}</p>
                                 </div>
                             </div>
                         </div>

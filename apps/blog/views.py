@@ -16,6 +16,8 @@ SUBJECT_PREFIX = '[BENTO BOX BLOG] '
 
 def post_list(request, tag_slug=None):
     posts_raw = Post.published.all()
+    
+    # Handle tag requests
     tag = None
     if tag_slug:
         tag = get_object_or_404(
@@ -23,6 +25,24 @@ def post_list(request, tag_slug=None):
             slug=tag_slug
         )
         posts_raw = posts_raw.filter(tags__in=[tag])
+
+    # Handle search requests
+    form = SearchForm()
+    query = None
+
+    if "query" in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data.get("query")
+            search_vector = SearchVector("title", weight="A") \
+                + SearchVector("body", weight="B")
+
+            search_query = SearchQuery(query)
+
+            posts_raw = posts_raw.annotate(
+                search=search_vector,
+                rank=SearchRank(search_vector, search_query)
+            ).filter(rank__gte=0.3).order_by("-rank")
 
     paginator = Paginator(posts_raw, 5)
     page_number = request.GET.get('page', 1)
@@ -37,8 +57,10 @@ def post_list(request, tag_slug=None):
         posts = paginator.page(paginator.num_pages)
 
     context = {
-        'posts': posts,
-        'tag': tag
+        "posts": posts,
+        "tag": tag,
+        "form": form,
+        "query": query,
     }
     return render(request, 'blog/post/list.html', context)
 
