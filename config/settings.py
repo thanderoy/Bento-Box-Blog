@@ -44,14 +44,15 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Local Apps
-    "apps.blog.apps.BlogConfig",
+    "apps.posts.apps.PostsConfig",
 
     # 3rd Party
-    "taggit",
+    "django_extensions",
+    "rest_framework",
     "corsheaders",
     "whitenoise.runserver_nostatic",
     "storages",
-    
+    "silk",
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    'silk.middleware.SilkyMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -93,18 +95,18 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.sqlite3",
-    #     "NAME": BASE_DIR / "db.sqlite3",
-    # },
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME", default=" "),
-        "USER": config("DB_USER", default=" "),
-        "PASSWORD": config("DB_PASSWORD", default=" "),
-        "HOST": config("DB_HOST", default=" "),
-        "PORT": config("DB_PORT", default=" "),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     },
+    # "default": {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": config("DB_NAME", default=" "),
+    #     "USER": config("DB_USER", default=" "),
+    #     "PASSWORD": config("DB_PASSWORD", default=" "),
+    #     "HOST": config("DB_HOST", default=" "),
+    #     "PORT": config("DB_PORT", default=" "),
+    # },
 }
 
 

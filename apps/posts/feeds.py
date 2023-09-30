@@ -10,7 +10,7 @@ from .models import Post
 
 class LatestPostsFeed(Feed):
     title = "Bento Box Blog"
-    link = reverse_lazy("blog:post_list")
+    link = reverse_lazy("posts:post-list")
     description = "New on Bento Box Blog"
 
     def items(self) -> QuerySet:
