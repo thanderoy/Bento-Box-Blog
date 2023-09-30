@@ -11,8 +11,6 @@ from taggit.models import Tag
 from .forms import CommentForm, EmailPostForm, SearchForm
 from .models import Post
 
-SUBJECT_PREFIX = '[BENTO BOX BLOG] '
-
 
 def post_list(request, tag_slug=None):
     posts_raw = Post.published.all()
@@ -116,7 +114,7 @@ def post_share(request, post_id):
             post_url = request.build_absolute_uri(
                 post.get_absolute_url()
             )
-            subject = SUBJECT_PREFIX + f"{data.get('name')} recommends you to \
+            subject = settings.SUBJECT_PREFIX + f"{data.get('name')} recommends you to \
                 read { post.title}"
             message = f"Read { post.title } at { post_url }\n\n \
                 {data.get('name')}\'s comments: { data.get('comment')}"

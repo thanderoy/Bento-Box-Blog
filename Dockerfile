@@ -6,9 +6,9 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK 1
 
 WORKDIR /django
 
-COPY requirements.txt requirements.txt
+COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE $PORT
+EXPOSE 8000
