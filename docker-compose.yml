@@ -1,0 +1,9 @@
+services:
+  django:
+    build: .
+    container_name: bento-box-blog
+    command: bash -c "django m; django mm; django runscript populate_test_data; django r 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
