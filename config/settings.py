@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "apps.posts.apps.PostsConfig",
 
     # 3rd Party
+    "drf_spectacular",
     "django_extensions",
     "rest_framework",
     "corsheaders",
@@ -166,3 +167,7 @@ SUBJECT_PREFIX = '[BENTO BOX BLOG] '
 CORS_ALLOWED_ORIGINS = config("ALLOWED_ORIGINS", default=" ",  cast=lambda var: var.split(','))   # noqa
 
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
